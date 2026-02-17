@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../config.h"
+#include "config.h"
 #include "n-balls.h"
-#include "../util/util.h"
+#include "util.h"
 
 Ball* createBall(Vector2 center, float radius, Vector2 velocityVector, float velocity){
 	Ball *ball = malloc(sizeof(Ball));

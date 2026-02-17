@@ -8,5 +8,3 @@ Color getRandomColor(){
 		GetRandomValue(200,255)
 	};
 }
-
-

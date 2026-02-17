@@ -1,5 +1,5 @@
 #include "config.h"
-#include "n-balls/n-balls.h"
+#include "n-balls.h"
 
 // main
 int main(void){
@@ -8,6 +8,7 @@ int main(void){
 
 	Ball balls[N];
 
+	// create balls
 	for (int i = 0; i < N; i++){
 
 		Vector2 center = {
@@ -31,8 +32,14 @@ int main(void){
 
 	while(!WindowShouldClose()){
 
-		//moveBalls();
-		//regulateBallPositions();
+		// update all balls with deltaframe * velocity with respect
+		// to it's velocity vector.
+
+		// compare every ball to all other balls with 2 for-loops
+		// for all balls which have a difference lte the sum of their
+		// radiuses, swap velocities, with an impact reduction.
+		
+		// update all positions respectfully
 
 		BeginDrawing();
 		ClearBackground(BLACK);
