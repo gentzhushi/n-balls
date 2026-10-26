@@ -1,4 +1,4 @@
-#include "n-balls/util.h"
+#include "util.h"
 
 Color getRandomColor() {
   return (Color){GetRandomValue(50, 255), GetRandomValue(50, 255),

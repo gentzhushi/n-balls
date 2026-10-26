@@ -1,9 +1,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include "n-balls/config.h"
-#include "n-balls/n-balls.h"
-#include "n-balls/util.h"
+#include "config.h"
+#include "n-balls.h"
+#include "util.h"
 
 Ball *createBall(Vector2 center, float radius, Vector2 velocityVector,
                  float velocity) {

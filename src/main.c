@@ -1,5 +1,5 @@
-#include "n-balls/config.h"
-#include "n-balls/n-balls.h"
+#include "config.h"
+#include "n-balls.h"
 
 // main
 int main(void) {
