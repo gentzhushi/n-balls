@@ -2,3 +2,8 @@
 *~
 .clangd
 game.o
+.DS_Store
+.*
+*.o
+*.obj
+compile_commands.json

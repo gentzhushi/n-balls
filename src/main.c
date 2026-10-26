@@ -1,55 +1,58 @@
-#include "config.h"
-#include "n-balls.h"
+#include "n-balls/config.h"
+#include "n-balls/n-balls.h"
 
 // main
-int main(void){
+int main(void) {
 
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "N Balls");
+  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "N Balls");
 
-	Ball balls[N];
+  Ball balls[N];
 
-	// create balls
-	for (int i = 0; i < N; i++){
+  // create balls
+  for (int i = 0; i < N; i++) {
 
-		Vector2 center = {
-			GetRandomValue(0, SCREEN_WIDTH),
-			GetRandomValue(0, SCREEN_HEIGHT)
-		};
+    float radius = GetRandomValue(MIN_RADIUS, MAX_RADIUS);
 
-		float radius = GetRandomValue(MIN_RADIUS, MAX_RADIUS);
+    Vector2 center = {GetRandomValue(radius, SCREEN_WIDTH - radius),
+                      GetRandomValue(radius, SCREEN_HEIGHT - radius)};
 
-		Vector2 velocityVector = {
-			GetRandomValue(1, 100),
-			GetRandomValue(1, 100),
-		};
+    Vector2 velocityVector = {
+        GetRandomValue(-100, 100),
+        GetRandomValue(-100, 100),
+    };
 
-		normalizeV(&velocityVector);
+    // normalizeV(&velocityVector);
 
-		float velocity = GetRandomValue(1,100);
-		
-		balls[i] = *createBall(center, radius, velocityVector, velocity);
-	}
+    float velocity = GetRandomValue(MIN_VELOCITY, MAX_VELOCITY);
 
-	while(!WindowShouldClose()){
+    balls[i] = *createBall(center, radius, velocityVector, velocity);
+  }
 
-		// update all balls with deltaframe * velocity with respect
-		// to it's velocity vector.
+  while (!WindowShouldClose()) {
 
-		// compare every ball to all other balls with 2 for-loops
-		// for all balls which have a difference lte the sum of their
-		// radiuses, swap velocities, with an impact reduction.
-		
-		// update all positions respectfully
+    for (int i = 0; i < N; i++) {
+      float dt = GetFrameTime();
+      Vector2 vv = balls[i].velocityV;
+      float velocity = balls[i].velocity;
+      balls[i].center.x += dt * velocity * vv.x;
+      balls[i].center.y += dt * velocity * vv.y;
+      regulatePositionBounds(&balls[i]);
+    }
 
-		BeginDrawing();
-		ClearBackground(BLACK);
+    for (int i = 0; i < N - 1; i++)
+      for (int j = i + 1; j < N; j++)
+        if (balls[i].radius + balls[j].radius >= distance(&balls[i], &balls[j]))
+          handleCollision(&balls[i], &balls[j]);
 
-		for (int i = 0; i < N; i++)
-			drawBall(&balls[i]);
+    BeginDrawing();
+    ClearBackground(BLACK);
 
-		EndDrawing();
-	}
+    for (int i = 0; i < N; i++)
+      drawBall(&balls[i]);
 
-	CloseWindow();
-	return 0;
+    EndDrawing();
+  }
+
+  CloseWindow();
+  return 0;
 }
